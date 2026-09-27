@@ -1,8 +1,17 @@
 import React from 'react';
 import {useState} from 'react';
+import {useEffect} from 'react';
 
 function Hero() {
-    const [angka, setAngka] = React.useState(0);
+    const [angka, setAngka] = useState(() => {
+        const saved = localStorage.getItem("angka");
+        const parsed = saved ? parseInt(saved, 10) : 0;
+    return isNaN(parsed) ? 0 : parsed;
+    });
+
+    useEffect(() => {
+        localStorage.setItem('angka', angka);
+    }, [angka]);
     return (
         <section className="bg-slate-50 py-20 px-8 text-center">
         <h1 className="text-5xl font-extrabold text-slate-900 mb-6">Solusi Terbaik untuk Bisnismu</h1>
